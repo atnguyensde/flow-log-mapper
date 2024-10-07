@@ -17,10 +17,15 @@ public class ProtocolLookupMap extends HashMap<String, String> {
 
     public static ProtocolLookupMap getInstance() throws IOException {
         if (Objects.isNull(instance)) {
-            LookupTableMapper<String, String> protocolLookupMapper = new ProtocolLookupTableMapper();
-            Map<String, String> map = protocolLookupMapper.map(PROTOCOL_LOOKUP_FILE_PATH);
-            instance = new ProtocolLookupMap();
-            instance.putAll(map);
+            synchronized (ProtocolLookupMap.class) {
+                if (Objects.isNull(instance)) {
+                    LookupTableMapper<String, String> protocolLookupMapper = new ProtocolLookupTableMapper();
+                    Map<String, String> map = protocolLookupMapper.map(PROTOCOL_LOOKUP_FILE_PATH);
+                    instance = new ProtocolLookupMap() {{
+                        putAll(map);
+                    }};
+                }
+            }
         }
         return instance;
     }
