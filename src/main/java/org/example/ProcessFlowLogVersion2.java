@@ -41,8 +41,11 @@ public class ProcessFlowLogVersion2 implements ProcessFlowLogStrategy {
                 }
                 String dstPort = parts[DSTPORT_INDEX];
                 String protocol = parts[PROTOCOL_INDEX];
-                countTag(tagLookUpMap, tagCountOutputMap, dstPort, protocol);
-                countNetworkRecord(networkRecordCountOutputMap, dstPort, protocol);
+                String protocolKeyword = ProtocolLookupMap.getInstance().get(protocol);
+                NetworkRecord record = new NetworkRecord(dstPort, protocolKeyword);
+
+                countTag(tagLookUpMap, tagCountOutputMap, record);
+                countNetworkRecord(networkRecordCountOutputMap, record);
             }
         }
 
@@ -50,18 +53,14 @@ public class ProcessFlowLogVersion2 implements ProcessFlowLogStrategy {
         networkRecordMapWriter.write(networkRecordCountOutputMap, networkRecordCountOutputPath);
     }
 
-    private void countTag(Map<NetworkRecord, String> tagLookUpMap, Map<String, Integer> tagCountOutputMap, String dstPort, String protocol) throws IOException {
-        String protocolKeyword = ProtocolLookupMap.getInstance().get(protocol);
-        NetworkRecord record = new NetworkRecord(dstPort, protocolKeyword);
+    private void countTag(Map<NetworkRecord, String> tagLookUpMap, Map<String, Integer> tagCountOutputMap, NetworkRecord record) {
         String tag = tagLookUpMap.get(record);
         if (!Objects.isNull(tag)) {
             tagCountOutputMap.put(tag, tagCountOutputMap.getOrDefault(tag, 0) + 1);
         }
     }
 
-    private void countNetworkRecord(Map<NetworkRecord, Integer> networkRecordCountOutputMap, String dstPort, String protocol) throws IOException {
-        String protocolKeyword = ProtocolLookupMap.getInstance().get(protocol);
-        NetworkRecord record = new NetworkRecord(dstPort, protocolKeyword);
+    private void countNetworkRecord(Map<NetworkRecord, Integer> networkRecordCountOutputMap, NetworkRecord record) {
         networkRecordCountOutputMap.put(record, networkRecordCountOutputMap.getOrDefault(record, 0) + 1);
     }
 }
