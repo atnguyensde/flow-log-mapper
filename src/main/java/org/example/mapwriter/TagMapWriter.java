@@ -9,6 +9,7 @@ public class TagMapWriter implements MapWriter<String, Integer> {
     private static final String TAG_COUNT_HEADER = "Tag,Count\n";
     private static final String COMMA_FIELD_DELIMITER = ",";
     private static final String LINE_DELIMITER = "\n";
+
     @Override
     public void write(Map<String, Integer> map, String filePath) throws IOException {
         try (FileWriter writer = new FileWriter(filePath)) {

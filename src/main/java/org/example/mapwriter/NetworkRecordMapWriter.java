@@ -11,6 +11,7 @@ public class NetworkRecordMapWriter implements MapWriter<NetworkRecord, Integer>
     private static final String NETWORK_RECORD_COUNT_HEADER = "Port,Protocol,Count\n";
     private static final String COMMA_FIELD_DELIMITER = ",";
     private static final String LINE_DELIMITER = "\n";
+
     @Override
     public void write(Map<NetworkRecord, Integer> map, String filePath) throws IOException {
         try (FileWriter writer = new FileWriter(filePath)) {
