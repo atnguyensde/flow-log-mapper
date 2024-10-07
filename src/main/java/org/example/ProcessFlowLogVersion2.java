@@ -1,6 +1,5 @@
 package org.example;
 
-import org.example.lookupmapper.LookupTableMapper;
 import org.example.lookupmapper.TagLookupTableMapper;
 import org.example.mapwriter.MapWriter;
 import org.example.mapwriter.NetworkRecordMapWriter;
@@ -8,7 +7,6 @@ import org.example.mapwriter.TagMapWriter;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;

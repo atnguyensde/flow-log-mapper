@@ -57,7 +57,7 @@ dstport,protocol,tag
 
 ## Running the Application
 
-To run the application, you don't need to clone/package the project. I attached a runnable jar to the repository. Please use the following command to run:
+To run the application, you don't need to clone/package the project. I attached a runnable jar, input/flow_log.txt and input/tag_lookup_table.csv to the repository. Please use the following command to run:
 
 ```bash
 java -jar <path_to_jar>/flow-log-mapper-1.0-SNAPSHOT.jar <path_to_lookup_table_csv> <path_to_flow_log_file> <path_to_tag_count_output_file> <path_to_port_protocol_count_output_file>
@@ -65,7 +65,7 @@ java -jar <path_to_jar>/flow-log-mapper-1.0-SNAPSHOT.jar <path_to_lookup_table_c
 
 ### Example
 ```bash
-java -jar target/flow-log-mapper-1.0-SNAPSHOT.jar src/main/resources/input/tag_lookup_table.csv src/main/resources/input/flow_log.txt src/main/resources/output/tag_count.csv src/main/resources/output/network_record_count.csv
+java -jar flow-log-mapper-1.0-SNAPSHOT.jar input/tag_lookup_table.csv input/flow_log.txt output/tag_count.csv output/network_record_count.csv
 ```
 
 ## Notes
