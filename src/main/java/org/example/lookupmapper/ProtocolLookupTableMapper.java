@@ -9,6 +9,8 @@ import java.util.Map;
 public class ProtocolLookupTableMapper implements LookupTableMapper<String, String> {
     private static final int PROTOCOL_LOOKUP_LENGTH = 2;
     private static final String LOOKUP_TABLE_FIELD_DELIMITER = ",";
+    private static final String RANGE_REGEX = "\\d+-\\d+";
+    private static final String RANGE_DELIMITER = "-";
 
     @Override
     public Map<String, String> map(String filePath) throws IOException {
@@ -23,11 +25,20 @@ public class ProtocolLookupTableMapper implements LookupTableMapper<String, Stri
                     System.out.println("Invalid mapping of protocol.");
                     continue;
                 }
-                String decimal = parts[0], keyword = null;
-                if (parts.length == PROTOCOL_LOOKUP_LENGTH) {
-                    keyword = parts[1];
+                String decimal = parts[0];
+                String keyword;
+                if (decimal.matches(RANGE_REGEX)) {
+                    String[] range = decimal.split(RANGE_DELIMITER);
+                    int start = Integer.parseInt(range[0]);
+                    int end = Integer.parseInt(range[1]);
+                    for (int num = start; num <= end; num++) {
+                        keyword = parts.length == PROTOCOL_LOOKUP_LENGTH ? parts[1] : String.valueOf(num);
+                        protocolLookupMap.put(String.valueOf(num), keyword);
+                    }
+                } else {
+                    keyword = parts.length == PROTOCOL_LOOKUP_LENGTH ? parts[1] : parts[0];
+                    protocolLookupMap.put(decimal, keyword);
                 }
-                protocolLookupMap.put(decimal, keyword);
             }
         }
         return protocolLookupMap;

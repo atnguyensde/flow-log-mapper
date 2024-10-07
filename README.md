@@ -72,4 +72,5 @@ java -jar flow-log-mapper-1.0-SNAPSHOT.jar input/tag_lookup_table.csv input/flow
 
 - Project uses only Java Core.
 - Flow log version 2 is supported, with log format as specified in https://docs.aws.amazon.com/vpc/latest/userguide/flow-log-records.html .
+- Protocols are mapped according to https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml. A mapping with missing keyword will have the corresponding decimal for both key and value.
 - Manual testing is done with sample log file and lookup table.
